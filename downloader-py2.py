@@ -4,6 +4,7 @@
 import urllib
 from selenium import webdriver
 from xvfbwrapper import Xvfb
+from time import time
 
 def process(n_blocks,block_size,file_size):
 	print "\r\t -> [ %f %% ]" %(n_blocks*block_size/float(file_size)*100), 
@@ -61,8 +62,10 @@ file_name=page_html[name_start:name_end]+"("+chsn_qlty+"p)."+ext
 print " [*] Video To Download : %s "%file_name
 
 # file_name=raw_input("Save With Name : ")
+start_time=time()
 print " [*] Downloading Progress :  "
 urllib.urlretrieve(url,file_name,process)
-
+end_time=time()
+downloading_time=round((end_time-start_time)/60,2)
 print "\n [*] Download Completed !"
-
+print " [*] Time Taken For Downloading <| %f Minutes |>"%downloading_time
