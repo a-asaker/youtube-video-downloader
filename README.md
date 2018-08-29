@@ -1,5 +1,5 @@
 # Youtube Video Downloader 
-  Youtube Video Downloader Is A Python 2 Project That Downloads Youtube Videos From Video URL On Youtube .
+  Youtube Video Downloader Is A Python Project That Downloads Youtube Videos From Video URL On Youtube .
   
   Coded By : a-asaker
   
