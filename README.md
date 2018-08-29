@@ -10,7 +10,7 @@
     - xvfbwrapper Module Installed (For Linux Users).
 
 # Notes :
-  * If you Use Google Chrome Or Another Web Browser Unless FireFox , Then You Should Change Line 18 In The Code :`browser = webdriver.Firefox()` To Your Browser Selenium WebDriver .
+  * If you Use Google Chrome Or Another Web Browser Unless FireFox , Then You Should Change Line 19 In The Code :`browser = webdriver.Firefox()` To Your Browser Selenium WebDriver .
   * If You Use Windows, You'll need To Comment Lines With Numbers [ 6 , 17 , 18 , 23 ] : 
             
             6  =>	# from xvfbwrapper import Xvfb
