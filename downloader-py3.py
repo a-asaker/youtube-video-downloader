@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # Coded By : A_Asaker
 
-#!/usr/bin/env python3
 import urllib.request
 from selenium import webdriver
 from xvfbwrapper import Xvfb
