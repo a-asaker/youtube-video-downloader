@@ -3,25 +3,30 @@
 
 import urllib.request
 from selenium import webdriver
-from xvfbwrapper import Xvfb
 from time import time
 import os,sys
+pf='windows' if sys.platform.find('win')!=-1 and sys.platform != 'darwin' else 'unix'
+
+if pf=='unix' :
+	from xvfbwrapper import Xvfb
 
 def process(n_blocks,block_size,file_size):
-	print("\r\t -> [ {0:.2f} % ]".format(round(n_blocks*block_size/float(file_size)*100,2)),end = "")
+	print("\r\t -> [Unknown File Size] - Downloading... ",end="") if round(n_blocks*block_size/float(file_size)*100,2)<0 else print("\r\t -> [ {0:.2f} % ]".format(round(n_blocks*block_size/float(file_size)*100,2)),end = "")
+
 
 def get_url(yt_url):
 	savefromnet="https://en.savefrom.net/#url={}&utm_source=youtube.com&utm_medium=short_domains&utm_campaign=ssyoutube.com".format(yt_url)
 	return savefromnet
 
-def get_vid_lst(save_url):
-	vdisplay = Xvfb(width=1280, height=720)
-	vdisplay.start()
+def get_vid_lst(save_url,yt_url):
+	vdisplay = Xvfb(width=1280, height=720) if pf=='unix' else None 
+	vdisplay.start() if pf=='unix' else None
 	browser = webdriver.Firefox()
 	browser.get(save_url)
+	browser.find_element_by_id("sf_url").send_keys(yt_url)
 	iframe_source = browser.page_source
 	browser.close()
-	vdisplay.stop()
+	vdisplay.stop() if pf=='unix' else None
 	page_html=iframe_source
 	while (page_html.find("&amp;")!= -1):
 		page_html=page_html.replace("&amp;","&")
@@ -80,10 +85,11 @@ def main():
 
 	start_srch='data-quality="{}" data-type="'.format(chsn_qlty)
 	start=page_html.find(start_srch)+len(start_srch)+11
+	start=page_html.find(start_srch)+len(start_srch)+12 if page_html[start]=="\"" else start
 	end=page_html.find('"',start)+1
 	url=page_html[start:end]
 
-	ext=str(page_html[start-11:start-8])
+	ext=str(page_html[start-11:start-8]) if str(page_html[start-12])=="\"" else str(page_html[start-12:start-8])
 
 	name_start=page_html.rfind('download=',start)+10
 	name_end=page_html.find('.',name_start)
